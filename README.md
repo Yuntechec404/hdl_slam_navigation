@@ -11,8 +11,9 @@ cd 3lidar/src
 
 git clone https://github.com/GPMxYunTech/3dlidar_ws.git
 
-caktin_make -DCMAKE_BUILD_TYPE=Release
+cd ..
 
+caktin_make -DCMAKE_BUILD_TYPE=Release
 ```
 
 
