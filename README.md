@@ -13,7 +13,7 @@ git clone https://github.com/GPMxYunTech/3dlidar_ws.git
 
 cd ..
 
-caktin_make -DCMAKE_BUILD_TYPE=Release
+catkin_make -DCMAKE_BUILD_TYPE=Release
 ```
 
 
