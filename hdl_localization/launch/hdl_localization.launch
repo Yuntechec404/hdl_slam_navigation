@@ -8,7 +8,7 @@
   <!-- <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/> -->
   
   <!-- arguments -->
-  <arg name="globalmap_pcd" default="/home/user/LiDARMapFile/20230213_Final.pcd">
+  <!-- <arg name="globalmap_pcd_path" default="/home/user/LiDARMapFile/20230213_Final.pcd"/> -->
   <arg name="nodelet_manager" default="velodyne_localization_nodelet_manager" />
   <arg name="points_topic" default="/velodyne_points" />
   <!-- input clouds are transformed in odom_child_frame, and then localization is performed in that frame -->
@@ -35,8 +35,8 @@
 
     <!-- globalmap_server_nodelet -->
     <node pkg="nodelet" type="nodelet" name="globalmap_server_nodelet" args="load hdl_localization/GlobalmapServerNodelet $(arg nodelet_manager)">
-      <remap from="globalmap_pcd" to="$(arg globalmap_pcd_path)" />
-      <!-- <param name="globalmap_pcd" value="/home/user/LiDARMapFile/20230213_Final.pcd" /> -->
+      <!-- <remap from="globalmap_pcd" to="$(arg globalmap_pcd_path)" /> -->
+      <param name="globalmap_pcd" value="/home/user/LiDARMapFile/20230213_Final.pcd" />
       <param name="convert_utm_to_local" value="true" />
       <param name="downsample_resolution" value="0.1" /> <!-- 0.1 -->
     </node>

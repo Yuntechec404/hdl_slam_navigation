@@ -15,6 +15,6 @@
   <!--hdl_localization-->
 
   <include file="$(find hdl_localization)/launch/hdl_localization.launch">
-    <arg name="globalmap_pcd" default="/home/user/LiDARMapFile/20230213_Final.pcd">
+    <!-- <arg name="globalmap_pcd_path" default="/home/user/LiDARMapFile/20230213_Final.pcd"/> -->
   </include>
 </launch>
