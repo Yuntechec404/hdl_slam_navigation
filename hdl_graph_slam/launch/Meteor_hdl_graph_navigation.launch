@@ -13,7 +13,7 @@
 
   <node pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find hdl_graph_slam)/rviz/hdl_graph_navigation.rviz"/>
 
-   <arg name="map_file" default="$(find hdl_graph_slam)/mapfile/MeteorDemo.yaml" />
+   <arg name="map_file" default="$(find hdl_graph_slam)/mapfile/gallery.yaml" />
    <!-- <arg name="map_file" default="/home/ericlai/map_pcd_pgm_yaml/20221227.yaml" /> -->
    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
     <arg name="initial_pose_x" default="0.0"/> 
@@ -22,8 +22,13 @@
  
    
   <!--hdl_localization-->
-
   <include file="$(find hdl_graph_slam)/launch/Meteor_hdl_localization.launch"/>
-  
+
+  <!--forklift_nav_LiDAR-->
+  <include file="$(find forklift_nav)/launch/forklift_nav_LiDAR.launch"/>
+
+
+  <!--3d_lidar-->
+  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
 
 </launch>

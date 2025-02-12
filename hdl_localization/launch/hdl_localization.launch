@@ -4,7 +4,6 @@
   <!-- <node pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find hdl_graph_slam)/rviz/hdl_graph_slam.rviz"/> -->
   
   <!--3d_lidar-->
-  
   <!-- <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/> -->
   
   <!-- arguments -->
