@@ -159,7 +159,6 @@ private:
     if(private_nh.param<bool>("specify_init_pose", true)) {
       NODELET_INFO("initialize pose estimator with specified parameters!!");
       pose_estimator.reset(new hdl_localization::PoseEstimator(registration,
-        ros::Time::now(),
         Eigen::Vector3f(private_nh.param<double>("init_pos_x", 0.0), private_nh.param<double>("init_pos_y", 0.0), private_nh.param<double>("init_pos_z", 0.0)),
         Eigen::Quaternionf(private_nh.param<double>("init_ori_w", 1.0), private_nh.param<double>("init_ori_x", 0.0), private_nh.param<double>("init_ori_y", 0.0), private_nh.param<double>("init_ori_z", 0.0)),
         private_nh.param<double>("cool_time_duration", 0.5)
@@ -182,12 +181,6 @@ private:
    * @param points_msg
    */
   void points_callback(const sensor_msgs::PointCloud2ConstPtr& points_msg) {
-    std::lock_guard<std::mutex> estimator_lock(pose_estimator_mutex);
-    if(!pose_estimator) {
-      NODELET_ERROR("waiting for initial pose input!!");
-      return;
-    }
-
     if(!globalmap) {
       NODELET_ERROR("globalmap has not been received!!");
       return;
@@ -224,6 +217,11 @@ private:
       delta_estimater->add_frame(filtered);
     }
 
+    std::lock_guard<std::mutex> estimator_lock(pose_estimator_mutex);
+    if(!pose_estimator) {
+      NODELET_ERROR("waiting for initial pose input!!");
+      return;
+    }
     Eigen::Matrix4f before = pose_estimator->matrix();
 
     // predict
@@ -344,7 +342,6 @@ private:
     std::lock_guard<std::mutex> lock(pose_estimator_mutex);
     pose_estimator.reset(new hdl_localization::PoseEstimator(
       registration,
-      ros::Time::now(),
       pose.translation(),
       Eigen::Quaternionf(pose.linear()),
       private_nh.param<double>("cool_time_duration", 0.5)));
@@ -366,7 +363,6 @@ private:
     pose_estimator.reset(
           new hdl_localization::PoseEstimator(
             registration,
-            ros::Time::now(),
             Eigen::Vector3f(p.x, p.y, p.z),
             Eigen::Quaternionf(q.w, q.x, q.y, q.z),
             private_nh.param<double>("cool_time_duration", 0.5))
@@ -451,21 +447,31 @@ private:
     status.header = header;
 
     status.has_converged = registration->hasConverged();
-    status.matching_error = registration->getFitnessScore();
+    status.matching_error = 0.0;
 
-    const double max_correspondence_dist = 0.5;
+    const double max_correspondence_dist = private_nh.param<double>("status_max_correspondence_dist", 0.5);
+    const double max_valid_point_dist = private_nh.param<double>("status_max_valid_point_dist", 25.0);
 
     int num_inliers = 0;
+    int num_valid_points = 0;
     std::vector<int> k_indices;
     std::vector<float> k_sq_dists;
     for(int i = 0; i < aligned->size(); i++) {
       const auto& pt = aligned->at(i);
+      if (pt.getVector3fMap().norm() > max_valid_point_dist) {
+        continue;
+      }
+      num_valid_points++;
+
       registration->getSearchMethodTarget()->nearestKSearch(pt, 1, k_indices, k_sq_dists);
       if(k_sq_dists[0] < max_correspondence_dist * max_correspondence_dist) {
+        status.matching_error += k_sq_dists[0];
         num_inliers++;
       }
     }
-    status.inlier_fraction = static_cast<float>(num_inliers) / aligned->size();
+
+    status.matching_error /= num_inliers;
+    status.inlier_fraction = static_cast<float>(num_inliers) / std::max(1, num_valid_points);
     status.relative_pose = tf2::eigenToTransform(Eigen::Isometry3d(registration->getFinalTransformation().cast<double>())).transform;
 
     status.prediction_labels.reserve(2);

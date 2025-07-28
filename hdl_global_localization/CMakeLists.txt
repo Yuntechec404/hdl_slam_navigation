@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
 )
 
-find_package(OpenCV 4.7.0 REQUIRED)
+find_package(OpenCV REQUIRED)
 
 find_package(OpenMP)
 if (OPENMP_FOUND)
