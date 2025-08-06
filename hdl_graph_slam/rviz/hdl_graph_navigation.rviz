@@ -38,10 +38,9 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Path2
-        - /Camera1
+        - /LaserScan1
       Splitter Ratio: 0.5
-    Tree Height: 329
+    Tree Height: 627
   - Class: rviz/Displays
     Help Height: 105
     Name: Displays
@@ -192,7 +191,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: Intensity
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
@@ -207,7 +206,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Class: rviz/TF
       Enabled: true
       Filter (blacklist): ""
@@ -219,8 +218,6 @@ Visualization Manager:
           Value: false
         map:
           Value: true
-        odom:
-          Value: true
         velodyne:
           Value: false
       Marker Alpha: 1
@@ -231,10 +228,9 @@ Visualization Manager:
       Show Names: true
       Tree:
         map:
-          odom:
-            base_link:
-              velodyne:
-                {}
+          base_link:
+            velodyne:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -258,7 +254,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
+      Size (m): 0.05000000074505806
       Style: Flat Squares
       Topic: /scan
       Unreliable: false
@@ -486,9 +482,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 9.102608680725098
-        Y: -0.4061984419822693
-        Z: 4.536494255065918
+        X: -8.50865364074707
+        Y: 0.2609322667121887
+        Z: 4.537304878234863
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
