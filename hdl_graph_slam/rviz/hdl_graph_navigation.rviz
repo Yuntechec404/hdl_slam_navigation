@@ -40,7 +40,7 @@ Panels:
       Expanded:
         - /LaserScan1
       Splitter Ratio: 0.5
-    Tree Height: 627
+    Tree Height: 329
   - Class: rviz/Displays
     Help Height: 105
     Name: Displays
@@ -154,8 +154,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 6.458238124847412
-        Min Value: -3.438004970550537
+        Max Value: 10.190765380859375
+        Min Value: -3.7587990760803223
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -220,6 +220,8 @@ Visualization Manager:
           Value: true
         velodyne:
           Value: false
+        wheel_odom:
+          Value: true
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -228,9 +230,10 @@ Visualization Manager:
       Show Names: true
       Tree:
         map:
-          base_link:
-            velodyne:
-              {}
+          wheel_odom:
+            base_link:
+              velodyne:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -474,7 +477,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 27.29715919494629
+      Distance: 9.136761665344238
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -482,9 +485,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -8.50865364074707
-        Y: 0.2609322667121887
-        Z: 4.537304878234863
+        X: -5.468085289001465
+        Y: -3.676328182220459
+        Z: 4.783054351806641
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -492,7 +495,7 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
-      Yaw: 4.72047233581543
+      Yaw: 3.1604719161987305
     Saved: ~
 Window Geometry:
   Camera:
