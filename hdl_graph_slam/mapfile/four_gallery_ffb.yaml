@@ -1,0 +1,6 @@
+image: four_gallery_ffb.png
+resolution: 0.05
+origin: [-37.5, -25, 0.0]
+occupied_thresh: 0.5
+free_thresh: 0.2
+negate: 0
